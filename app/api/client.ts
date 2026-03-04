@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { fetchWithAuth } from './auth';
 
 // Use 10.0.2.2 for Android emulator to access localhost, and localhost for iOS/Web.
 // You may need to change this to your computer's local network IP if testing on a physical device.
@@ -13,7 +14,7 @@ export interface Client {
 }
 
 export const fetchClients = async (): Promise<Client[]> => {
-  const response = await fetch(`${API_BASE_URL}/clients`);
+  const response = await fetchWithAuth('/clients');
   if (!response.ok) {
     throw new Error('Failed to fetch clients');
   }
@@ -21,11 +22,8 @@ export const fetchClients = async (): Promise<Client[]> => {
 };
 
 export const createClient = async (client: Omit<Client, 'id'>): Promise<Client> => {
-  const response = await fetch(`${API_BASE_URL}/clients`, {
+  const response = await fetchWithAuth('/clients', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify(client),
   });
   if (!response.ok) {
