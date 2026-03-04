@@ -1,6 +1,8 @@
 package com.croma.server.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "clients")
@@ -10,8 +12,11 @@ public class Client {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotBlank(message = "Name is mandatory")
   private String name;
 
+  @NotBlank(message = "Email is mandatory")
+  @Email(message = "Invalid email format")
   @Column(unique = true)
   private String email;
 

@@ -2,6 +2,7 @@ package com.croma.server.controller;
 
 import com.croma.server.model.Client;
 import com.croma.server.repository.ClientRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,12 @@ public class ClientController {
   }
 
   @PostMapping
-  public Client createClient(@RequestBody Client client) {
+  public Client createClient(@Valid @RequestBody Client client) {
       return clientRepository.save(client);
   }
 
   @PutMapping("/{id}")
-  public Client updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
+  public Client updateClient(@PathVariable Long id, @Valid @RequestBody Client updatedClient) {
     return clientRepository.findById(id)
       .map(client -> {
         client.setName(updatedClient.getName());
